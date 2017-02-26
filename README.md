@@ -115,4 +115,14 @@ options:
 
 ```
 (lita) help aws
+# or
+(lita) help aws elb
+(lita) help aws ec2
+(lita) help aws rds
+....
+
 ```
+
+## (For Mac OS users) Disable double dash auto converting
+
+- For Mac OS users, if you try to type double dash (i.e. `--`) on Slack messasge input field, it would auto convert to emdash (i.e. `—`), please disable it. (Ref: http://superuser.com/questions/555628/how-to-stop-mac-to-convert-typing-double-dash-to-emdash)
