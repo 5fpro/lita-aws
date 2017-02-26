@@ -8,7 +8,7 @@ module LitaAws
       cmd_postfix = opts.to_a.map { |e| "--#{e.first} #{e.last}"}.join(' ')
       cmd = cmd.gsub(';', '')
       cmd_postfix = cmd_postfix.gsub(';', '')
-      `aws #{cmd} #{cmd_postfix}`
+      `~/.local/bin/aws #{cmd} #{cmd_postfix}`
     end
 
     def exec_cli_json(cmd, opts = {})
