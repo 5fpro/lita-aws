@@ -59,7 +59,7 @@ Example:
 (lita) aws account-id --profile 5fpro
 ```
 
-#### Execute as aws-cli.
+# Execute as aws-cli
 
 ```
 (lita) aws-cli ec2 describe-instances --page-size 10 --profile {profile_name}
@@ -74,9 +74,15 @@ aws ec2 describe-instances --page-size 10 --profile {profile_name}
 and return json.
 
 
+## Customized commands usage
+
+- `lita-aws` provide customized commands for re-composing json data and formatting output to human-readable response. All of these customized command will use `aws ` as command prefix.
+
+- Here is the exmaple to get cloudwatch data:
+
 #### Get cloudwatch metric data.
 
-- lita-aws provide gem-owned command for re-composing json data and formatting output for bot response. All of these customized command will use `aws ` as prefix, here is the exmaple to get cloudwatch data.
+- Get EC2 instance memory utilization from Cloudwatch.
 
 ```
 (lita) aws ec2-memutil {Instance ID} --ago 2d --cal Average --period 300s --profile {profile_name}
@@ -105,7 +111,7 @@ options:
 - period: `300s` means each data contains 300 seconds.
 - cal: `Averages` means each period data will calculate its average as output value. To see more values http://docs.aws.amazon.com/cli/latest/reference/cloudwatch/get-metric-statistics.html and find `--statistics`.
 
-#### More customized commands
+## More customized commands
 
 ```
 (lita) help aws
