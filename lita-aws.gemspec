@@ -5,8 +5,8 @@ Gem::Specification.new do |spec|
   spec.email         = ["marsz330@gmail.com"]
   spec.description   = "Lita plugin for managing AWS services on multple accounts"
   spec.summary       = "Lita plugin for managing AWS services on multple accounts"
-  spec.homepage      = "TODO: Add a homepage"
-  spec.license       = "TODO: Add a license"
+  spec.homepage      = "https://github.com/marsz/lita-aws"
+  spec.license       = "MIT"
   spec.metadata      = { "lita_plugin_type" => "handler" }
 
   spec.files         = `git ls-files`.split($/)
