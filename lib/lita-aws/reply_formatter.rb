@@ -4,6 +4,7 @@ module LitaAws
     protected
 
     def format_timeline(array)
+      array.map { |d| "#{d[0]} : #{d[1]}" }.join("\n")
     end
 
     def format_hash_list_with_title(title_key, hash_list)
