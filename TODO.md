@@ -1,4 +1,4 @@
-- Set aws-cli command text to alias name. For example:
+## Set aws-cli command text to alias name. For example:
 
 ```
 (lita) aws-cli ec2 describe-instances --profile 5fpro --alias 5fpro-ec2s
