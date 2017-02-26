@@ -5,6 +5,7 @@ module Lita
       include ::LitaAws::ReplyFormatter
       include ::LitaAws::Parser
       include ::LitaAws::Data
+      include ::LitaAws::Scripts
     end
   end
 end

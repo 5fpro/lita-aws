@@ -14,6 +14,7 @@ module LitaAws
         hash.reject { |k, _| k == title_key }.each do |col, v|
           lines << "  #{col}: #{v}"
         end
+        lines << '---------------------'
       end
       lines.join("\n")
     end

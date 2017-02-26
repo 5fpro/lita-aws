@@ -29,6 +29,15 @@ module Lita
         data = data['Images'].map { |img| ami_to_hash(img) }
         render response, format_hash_list_with_title(:name, data)
       end
+
+      help = { 'aws ec2-amis[ --profile NAME]' => 'Show AMI detail.' }
+      route(/aws ec2\-amis[ ]*(.*)$/, help: help) do |response|
+        opts = get_options(response)
+        data = exec_cli_json("ec2 describe-images --owners #{account_id(opts)}", opts)
+        data = data['Images'].map { |img| ami_to_hash(img) }
+        render response, format_hash_list_with_title(:name, data)
+      end
+
       Lita.register_handler(AwsEc2)
     end
   end

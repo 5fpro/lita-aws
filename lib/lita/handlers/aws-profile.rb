@@ -27,6 +27,12 @@ module Lita
         response.reply("Set profile #{name}:\n  region: #{@region}\n  aws_access_key_id: #{@aws_access_key_id}\n  aws_secret_access_key: #{@aws_secret_access_key}")
       end
 
+      help = { 'aws account-id[ --profile NAME]' => 'Get your aws account id.' }
+      route(/aws account\-id[ ]*(.*)$/, help: help) do |response|
+        opts = get_options(response)
+        render response, "Your AWS account id: #{account_id(opts)}"
+      end
+
       Lita.register_handler(AwsProfile)
     end
   end

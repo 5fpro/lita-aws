@@ -6,11 +6,12 @@ Lita.load_locales Dir[File.expand_path(
 
 
 # modules
+require 'lita-aws/version'
 require 'lita-aws/base'
 require 'lita-aws/reply_formatter'
 require 'lita-aws/parser'
 require 'lita-aws/data'
-require 'lita-aws/version'
+require 'lita-aws/scripts'
 
 # handlers
 require 'lita/handlers/aws-base-handler'
