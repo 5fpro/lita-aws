@@ -1,6 +1,9 @@
+$LOAD_PATH.unshift(File.expand_path('../lib', __FILE__))
+require 'lita-aws/version'
+
 Gem::Specification.new do |spec|
   spec.name          = "lita-aws"
-  spec.version       = "0.1.0"
+  spec.version       = LitaAws::VERSION
   spec.authors       = ["marsz"]
   spec.email         = ["marsz330@gmail.com"]
   spec.description   = "Lita plugin for managing AWS services on multple accounts"

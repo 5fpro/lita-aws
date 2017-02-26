@@ -4,9 +4,21 @@ Lita.load_locales Dir[File.expand_path(
   File.join("..", "..", "locales", "*.yml"), __FILE__
 )]
 
+
+# modules
+require 'lita-aws/base'
+require 'lita-aws/reply_formatter'
+require 'lita-aws/parser'
+require 'lita-aws/version'
+
+# handlers
 require "lita/handlers/aws"
+require "lita/handlers/aws-base-handler"
+require "lita/handlers/aws-profile"
+require "lita/handlers/aws-ec2"
 
 Lita::Handlers::Aws.template_root File.expand_path(
   File.join("..", "..", "templates"),
  __FILE__
 )
+
