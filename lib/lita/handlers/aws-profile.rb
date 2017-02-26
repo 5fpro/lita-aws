@@ -10,7 +10,7 @@ module Lita
         results = profiles.inject({}) do |h, e|
           h.merge(e => attrs.inject({}) do |hh, ee|
             profile = e == 'default' ? '' : "--profile #{e}"
-            hh.merge(ee => `aws configure get #{ee} #{profile}`.gsub("\n", ''))
+            hh.merge(ee => exec_cli("configure get #{ee} #{profile}").gsub("\n", ''))
           end)
         end
         lines = results.to_a.inject([]) { |a, e| a + ["#{e[0]}: #{e[1].values.join(', ')}"] }
@@ -22,7 +22,7 @@ module Lita
         name, @region, @aws_access_key_id, @aws_secret_access_key = response.matches.first
         cmd_postfix = name == 'default' ? '' : "--profile #{name}"
         ['region', 'aws_access_key_id', 'aws_secret_access_key'].each do |attr|
-          `aws configure set #{attr} #{instance_variable_get("@#{attr}")} #{cmd_postfix}`
+          exec_cli("configure set #{attr} #{instance_variable_get("@#{attr}")} #{cmd_postfix}")
         end
         response.reply("Set profile #{name}:\n  region: #{@region}\n  aws_access_key_id: #{@aws_access_key_id}\n  aws_secret_access_key: #{@aws_secret_access_key}")
       end

@@ -6,6 +6,8 @@ module LitaAws
 
     def exec_cli(cmd, opts = {})
       cmd_postfix = opts.to_a.map { |e| "--#{e.first} #{e.last}"}.join(' ')
+      cmd = cmd.gsub(';', '')
+      cmd_postfix = cmd_postfix.gsub(';', '')
       `aws #{cmd} #{cmd_postfix}`
     end
 
@@ -17,5 +19,6 @@ module LitaAws
       # TODO: debug here
       response.reply(text)
     end
+
   end
 end
