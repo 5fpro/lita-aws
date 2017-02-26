@@ -17,7 +17,7 @@ module Lita
         response.reply(lines.join("\n"))
       end
 
-      help = { 'aws profile [name] [region] [api key] [secret key]' => 'Create or update aws profile credentials and region. If use \'default\' as name, it would set to default profile.'}
+      help = { 'aws profile {name} {region} {api key} {secret key}' => 'Create or update aws profile credentials and region. If use \'default\' as name, it would set to default profile.'}
       route(/aws profile ([a-zA-Z\-0-9]+) ([a-z\-0-9]+) ([^ ]+) ([^ ]+)/, help: help) do |response|
         name, @region, @aws_access_key_id, @aws_secret_access_key = response.matches.first
         cmd_postfix = name == 'default' ? '' : "--profile #{name}"

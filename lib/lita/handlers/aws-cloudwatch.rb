@@ -2,7 +2,7 @@ module Lita
   module Handlers
     class AwsCloudWatchHandler < AwsBaseHandler
 
-      help = { 'aws ec2-memutil [instance id][ --ago 2d][ --cal Average|SampleCount|Sum|Minimum|Maximum][ --period 300s][ --profile NAME]' => 'Show memory utilization of EC2 instance.' }
+      help = { 'aws ec2-memutil {instance id}[ --ago 2d][ --cal Average|SampleCount|Sum|Minimum|Maximum][ --period 300s][ --profile NAME]' => 'Show memory utilization of EC2 instance.' }
       route(/aws ec2\-memutil ([i][\-][0-9a-zA-Z]+)[ ]*(.*)$/, help: help) do |response|
         opts = get_options_for_cloudwatch(response, ago: '2d', period: '300s', cal: 'Average')
         instance_id = response.matches.first.first
@@ -11,7 +11,7 @@ module Lita
         render_cloudwatch_data(response, data, opts[:cal])
       end
 
-      help = { 'aws ec2-cpuutil [instance id][ --ago 2d][ --period 300s][ --profile NAME]' => 'Show CPU utilization of EC2 instance.'}
+      help = { 'aws ec2-cpuutil {instance id}[ --ago 2d][ --period 300s][ --profile NAME]' => 'Show CPU utilization of EC2 instance.'}
       route(/aws ec2\-cpuutil ([i][\-][0-9a-zA-Z]+)[ ]*(.*)$/, help: help) do |response|
         opts = get_options_for_cloudwatch(response, ago: '2d', period: '300s')
         instance_id = response.matches.first.first
@@ -20,7 +20,7 @@ module Lita
         render_cloudwatch_data(response, data, 'Average')
       end
 
-      help = { 'aws elb-req-sum [ELB name][ --ago 2d][ --period 300s][ --profile NAME]' => 'Show ELB request count.'}
+      help = { 'aws elb-req-sum {ELB name}[ --ago 2d][ --period 300s][ --profile NAME]' => 'Show ELB request count.'}
       route(/aws elb\-req-sum ([0-9a-zA-Z_]+)[ ]*(.*)$/, help: help) do |response|
         opts = get_options_for_cloudwatch(response, ago: '2d', period: '300s')
         elb_name = response.matches.first.first
@@ -29,7 +29,7 @@ module Lita
         render_cloudwatch_data(response, data, 'Sum')
       end
 
-      help = { 'aws rds-space [RDS Identifier][ --profile NAME]' => 'Show RDS instance current disk space in GB.' }
+      help = { 'aws rds-space {RDS Identifier}[ --profile NAME]' => 'Show RDS instance current disk space in GB.' }
       route(/aws rds\-space ([0-9a-zA-Z_]+)[ ]*(.*)$/, help: help) do |response|
         opts = get_options_for_cloudwatch(response)
         rds = response.matches.first.first
