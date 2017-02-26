@@ -14,5 +14,15 @@ module LitaAws
         type: instance['InstanceType'],
       }
     end
+
+    def ami_to_hash(ami)
+      {
+        name: ami['Name'],
+        id: ami['ImageId'],
+        state: ami['State'],
+        type: ami['ImageType'],
+        desc: ami['Description']
+      }
+    end
   end
 end
