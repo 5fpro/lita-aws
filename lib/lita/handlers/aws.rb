@@ -1,7 +1,42 @@
 module Lita
   module Handlers
     class Aws < Handler
-      # insert handler code here
+      help = { 'aws [service] help' => 'Get command options help of [service].' }
+      route(/aws (.+) help$/, help: help) do |response|
+        service = response.matches[0][0]
+        text = `aws #{service} help|cat`
+        response.reply(text.gsub("\n\n", "\n"))
+      end
+
+      help = { 'aws profile' => 'list all aws profile.'}
+      route(/aws profile$/, help: help) do |response|
+        config_text = `cat ~/.aws/config`
+        profiles = ['default'] + config_text.scan(/\[profile ([a-z0-9A-Z\-_]+)\]\n/).map(&:first)
+        attrs = ['region', 'aws_access_key_id']
+        results = profiles.inject({}) do |h, e|
+          h.merge(e => attrs.inject({}) do |hh, ee|
+            profile = e == 'default' ? '' : "--profile #{e}"
+            hh.merge(ee => `aws configure get #{ee} #{profile}`.gsub("\n", ''))
+          end)
+        end
+        lines = results.to_a.inject([]) { |a, e| a + ["#{e[0]}: #{e[1].values.join(', ')}"] }
+        response.reply(lines.join("\n"))
+      end
+
+      help = { 'aws profile [name] [region] [api key] [secret key]' => 'Create or update aws profile credentials and region. If use \'default\' as name, it would set to default profile.'}
+      route(/aws profile ([a-zA-Z\-0-9]+) ([a-z\-0-9]+) ([^ ]+) ([^ ]+)/, help: help) do |response|
+        name, @region, @aws_access_key_id, @aws_secret_access_key = response.matches.first
+        cmd_postfix = name == 'default' ? '' : "--profile #{name}"
+        ['region', 'aws_access_key_id', 'aws_secret_access_key'].each do |attr|
+          `aws configure set #{attr} #{instance_variable_get("@#{attr}")} #{cmd_postfix}`
+        end
+        response.reply("Set profile #{name}:\n  region: #{@region}\n  aws_access_key_id: #{@aws_access_key_id}\n  aws_secret_access_key: #{@aws_secret_access_key}")
+      end
+
+      help = { 'aws-cli [command]' => 'Execute aws-cli.' }
+      route(/aws\-cli (.+)$/, help: help) do |response|
+        response.reply(`aws #{response.matches.first[0]}`)
+      end
 
       Lita.register_handler(self)
     end
