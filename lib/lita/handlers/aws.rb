@@ -1,3 +1,4 @@
+require 'json'
 module Lita
   module Handlers
     class Aws < Handler
@@ -33,9 +34,56 @@ module Lita
         response.reply("Set profile #{name}:\n  region: #{@region}\n  aws_access_key_id: #{@aws_access_key_id}\n  aws_secret_access_key: #{@aws_secret_access_key}")
       end
 
+      help = { 'aws ec2-instances[ --profile NAME]' => 'List instances on EC2.'}
+      route(/aws ec2\-instances[ ]*(.*)$/, help: help) do |response|
+        data = execute_cli_json('ec2 describe-instances', fetch_profile(response))
+        instances = data['Reservations'].map do |tmp|
+          tmp['Instances'].map do |instance|
+            {
+              instance_id: instance['InstanceId'],
+              name: instance['Tags'].select { |d| d['Key'] == 'Name' }.first['Value'],
+              public_dns: instance['PublicDnsName'],
+              public_ip: instance['PublicIpAddress'],
+              state: instance['State']['Name'],
+              sg: instance['SecurityGroups'].first['GroupName'],
+              type: instance['InstanceType'],
+
+            }
+          end
+        end.flatten
+        response.reply(format_list(instances, :name))
+      end
+
       help = { 'aws-cli [command]' => 'Execute aws-cli.' }
       route(/aws\-cli (.+)$/, help: help) do |response|
         response.reply(`aws #{response.matches.first[0]}`)
+      end
+
+      private
+
+      def fetch_profile(response)
+        response.matches.first.last.to_s.split('--profile ').last
+      end
+
+      def execute_cli(cmd, profile)
+        cmd_postfix = profile ? "--profile #{profile}" : ''
+        data = `aws #{cmd} #{cmd_postfix}`
+        data
+      end
+
+      def execute_cli_json(cmd, profile)
+        JSON.parse(execute_cli(cmd, profile))
+      end
+
+      def format_list(list, title_key)
+        lines = []
+        list.each do |e|
+          lines << e[title_key]
+          e.reject { |k, _| k == title_key }.each do |col, v|
+            lines << "  #{col}: #{v}"
+          end
+        end
+        lines.join("\n")
       end
 
       Lita.register_handler(self)
