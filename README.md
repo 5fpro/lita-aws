@@ -1,7 +1,7 @@
 # lita-aws
 
-[![Build Status](https://travis-ci.org/5fpro/lita-aws.png?branch=master)](https://travis-ci.org/5fpro/lita-aws)
-[![Coverage Status](https://coveralls.io/repos/5fpro/lita-aws/badge.png)](https://coveralls.io/r/5fpro/lita-aws)
+[![Build Status](https://travis-ci.org/5fpro/lita-aws.svg?branch=master)](https://travis-ci.org/5fpro/lita-aws)
+[![Coverage Status](https://coveralls.io/repos/github/5fpro/lita-aws/badge.svg?branch=master)](https://coveralls.io/github/5fpro/lita-aws?branch=master)
 [![Code Climate](https://codeclimate.com/github/5fpro/lita-aws/badges/gpa.svg)](https://codeclimate.com/github/5fpro/lita-aws)
 [![Issue Count](https://codeclimate.com/github/5fpro/lita-aws/badges/issue_count.svg)](https://codeclimate.com/github/5fpro/lita-aws)
 
