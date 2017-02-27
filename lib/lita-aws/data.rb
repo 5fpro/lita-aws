@@ -24,5 +24,21 @@ module LitaAws
         desc: ami['Description']
       }
     end
+
+    def db_instance_to_hash(db)
+      {
+        name: db['DBInstanceIdentifier'],
+        status: db['DBInstanceStatus'],
+        engine: db['Engine'],
+        version: db['EngineVersion'],
+        connect_user: db['MasterUsername'],
+        connect_endpoint: db['Endpoint']['Address'],
+        connect_can_public: db['PubliclyAccessible'],
+        has_multiaz: db['MultiAZ'],
+        arn: db['DBInstanceArn'],
+        size: "#{db['AllocatedStorage']} GB",
+        type: db['DBInstanceClass']
+      }
+    end
   end
 end

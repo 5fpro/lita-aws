@@ -19,7 +19,7 @@ require 'lita/handlers/aws-profile'
 require 'lita/handlers/aws-ec2'
 require 'lita/handlers/aws-cloudwatch'
 require 'lita/handlers/aws-elb'
-# require 'lita/handlers/aws-rds'
+require 'lita/handlers/aws-rds'
 
 Lita::Handlers::Aws.template_root File.expand_path(
   File.join('..', '..', 'templates'),
