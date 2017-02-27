@@ -1,6 +1,4 @@
 require 'json'
-$bin_aws = `which aws`.gsub("\n", '')
-$bin_aws = '~/.local/bin/aws' if $bin_aws.index(' ') || $bin_aws.to_s.length == 0
 
 module LitaAws
   module Base
@@ -11,7 +9,15 @@ module LitaAws
       cmd_postfix = opts.to_a.map { |e| "--#{e.first} #{e.last}" }.join(' ')
       cmd = cmd.delete(';')
       cmd_postfix = cmd_postfix.delete(';')
-      `#{$bin_aws} #{cmd} #{cmd_postfix}`
+      `#{bin_aws} #{cmd} #{cmd_postfix}`
+    end
+
+    def bin_aws
+      unless @bin_aws
+        @bin_aws = `which aws`.gsub("\n", '')
+        @bin_aws = '~/.local/bin/aws' if @bin_aws.index(' ') || @bin_aws.length == 0
+      end
+      @bin_aws
     end
 
     def exec_cli_json(cmd, opts = {})
