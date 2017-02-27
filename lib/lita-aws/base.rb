@@ -1,6 +1,6 @@
 require 'json'
 $bin_aws = `which aws`.gsub("\n", '')
-$bin_aws = '~/.local/bin/aws' if $bin_aws.index(' ')
+$bin_aws = '~/.local/bin/aws' if $bin_aws.index(' ') || $bin_aws.to_s.length == 0
 
 module LitaAws
   module Base
