@@ -15,9 +15,17 @@ module LitaAws
       JSON.parse exec_cli(cmd, opts)
     end
 
+    def add_error(msg, objects = nil)
+      @errors ||= []
+      @errors << { msg: msg, objects: objects }
+    end
+
     def render(response, text)
-      # TODO: debug here
-      response.reply(text)
+      if text
+        response.reply(text)
+      else
+        response.reply("[Fail] #{@errors.map(&:to_s).join("\n")}")
+      end
     end
 
   end
