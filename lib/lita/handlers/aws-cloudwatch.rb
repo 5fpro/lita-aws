@@ -11,7 +11,7 @@ module Lita
         render_cloudwatch_data(response, data, opts[:cal])
       end
 
-      help = { 'aws ec2-cpuutil {instance id}[ --ago 2d][ --period 300s][ --profile NAME]' => 'Show CPU utilization of EC2 instance.'}
+      help = { 'aws ec2-cpuutil {instance id}[ --ago 2d][ --period 300s][ --profile NAME]' => 'Show CPU utilization of EC2 instance.' }
       route(/aws ec2\-cpuutil ([i][\-][0-9a-zA-Z]+)[ ]*(.*)$/, help: help) do |response|
         opts = get_options_for_cloudwatch(response, ago: '2d', period: '300s')
         instance_id = response.matches.first.first
@@ -20,7 +20,7 @@ module Lita
         render_cloudwatch_data(response, data, 'Average')
       end
 
-      help = { 'aws elb-req-sum {ELB name}[ --ago 2d][ --period 300s][ --profile NAME]' => 'Show ELB request count.'}
+      help = { 'aws elb-req-sum {ELB name}[ --ago 2d][ --period 300s][ --profile NAME]' => 'Show ELB request count.' }
       route(/aws elb\-req-sum ([0-9a-zA-Z_]+)[ ]*(.*)$/, help: help) do |response|
         opts = get_options_for_cloudwatch(response, ago: '2d', period: '300s')
         elb_name = response.matches.first.first
@@ -33,8 +33,8 @@ module Lita
       route(/aws rds\-space ([0-9a-zA-Z_]+)[ ]*(.*)$/, help: help) do |response|
         opts = get_options_for_cloudwatch(response)
         rds = response.matches.first.first
-        start_time = (Time.now.utc - (12 * 60 * 60)).strftime("%Y-%m-%dT%H:00")
-        end_time = Time.now.utc.strftime("%Y-%m-%dT%H:00")
+        start_time = (Time.now.utc - (12 * 60 * 60)).strftime('%Y-%m-%dT%H:00')
+        end_time = Time.now.utc.strftime('%Y-%m-%dT%H:00')
         cmd = "cloudwatch get-metric-statistics --namespace AWS/RDS --metric-name FreeStorageSpace --dimensions Name=DBInstanceIdentifier,Value=#{rds} --start-time #{start_time} --end-time #{end_time} --period 120 --statistics Minimum"
         data = convert_datapoints(exec_cli_json(cmd, opts[:cmd_opts]), 'Minimum')
         render(response, "Free space of #{rds}:\n  #{(data.last || []).last}")
@@ -48,8 +48,8 @@ module Lita
         defaults.each { |k, v| results[k] = (opts.delete(k) || v) }
 
         if results[:ago]
-          results[:start_time] = (Time.now - (results[:ago].to_i) * (60 * 60 * 24)).utc.strftime("%Y-%m-%dT%H:00")
-          results[:end_time] = Time.now.utc.strftime("%Y-%m-%dT%H:00")
+          results[:start_time] = (Time.now - results[:ago].to_i * (60 * 60 * 24)).utc.strftime('%Y-%m-%dT%H:00')
+          results[:end_time] = Time.now.utc.strftime('%Y-%m-%dT%H:00')
         end
         results[:period] = results[:period].to_i if results[:period]
 
@@ -63,11 +63,12 @@ module Lita
       end
 
       def convert_datapoints(data, cal)
-        data['Datapoints'].map do |d|
+        res = data['Datapoints'].map do |d|
           unit = unit_name(d['Unit'])
           value = convert_value(d['Unit'], d[cal])
-          [ d['Timestamp'], "#{value}#{unit}"]
-        end.sort_by { |d| Time.parse(d[0]).to_i }
+          [d['Timestamp'], "#{value}#{unit}"]
+        end
+        res.sort_by { |d| Time.parse(d[0]).to_i }
       end
 
       def unit_name(unit)
@@ -84,7 +85,6 @@ module Lita
         when 'Bytes' then (value / 1024 / 1024 / 1024).round(1)
         else value
         end
-
       end
 
       Lita.register_handler(AwsCloudWatchHandler)

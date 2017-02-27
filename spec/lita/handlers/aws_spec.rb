@@ -1,4 +1,4 @@
-require "spec_helper"
+require 'spec_helper'
 
 describe Lita::Handlers::Aws, lita_handler: true do
 end

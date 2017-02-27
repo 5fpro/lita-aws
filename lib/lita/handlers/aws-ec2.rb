@@ -2,7 +2,7 @@ module Lita
   module Handlers
     class AwsEc2 < AwsBaseHandler
 
-      help = { 'aws ec2-instances[ --profile NAME]' => 'List instances on EC2.'}
+      help = { 'aws ec2-instances[ --profile NAME]' => 'List instances on EC2.' }
       route(/aws ec2\-instances[ ]*(.*)$/, help: help) do |response|
         data = exec_cli_json('ec2 describe-instances', get_options(response))
         instances = data['Reservations'].map do |tmp|

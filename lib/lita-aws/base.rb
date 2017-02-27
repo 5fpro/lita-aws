@@ -5,9 +5,9 @@ module LitaAws
     protected
 
     def exec_cli(cmd, opts = {})
-      cmd_postfix = opts.to_a.map { |e| "--#{e.first} #{e.last}"}.join(' ')
-      cmd = cmd.gsub(';', '')
-      cmd_postfix = cmd_postfix.gsub(';', '')
+      cmd_postfix = opts.to_a.map { |e| "--#{e.first} #{e.last}" }.join(' ')
+      cmd = cmd.delete(';')
+      cmd_postfix = cmd_postfix.delete(';')
       `~/.local/bin/aws #{cmd} #{cmd_postfix}`
     end
 

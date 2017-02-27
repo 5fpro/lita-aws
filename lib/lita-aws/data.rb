@@ -11,7 +11,7 @@ module LitaAws
         public_ip: instance['PublicIpAddress'],
         state: instance['State']['Name'],
         security_group: instance['SecurityGroups'].first['GroupName'],
-        type: instance['InstanceType'],
+        type: instance['InstanceType']
       }
     end
 
