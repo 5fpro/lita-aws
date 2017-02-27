@@ -1,9 +1,7 @@
 # lita-aws
 
-[![Build Status](https://travis-ci.org/marsz/lita-aws.png?branch=master)](https://travis-ci.org/marsz/lita-aws)
-[![Coverage Status](https://coveralls.io/repos/marsz/lita-aws/badge.png)](https://coveralls.io/r/marsz/lita-aws)
-
-TODO: Add a description of the plugin.
+[![Build Status](https://travis-ci.org/5fpro/lita-aws.png?branch=master)](https://travis-ci.org/5fpro/lita-aws)
+[![Coverage Status](https://coveralls.io/repos/5fpro/lita-aws/badge.png)](https://coveralls.io/r/5fpro/lita-aws)
 
 ## Installation
 
