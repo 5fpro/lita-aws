@@ -14,8 +14,8 @@ module LitaAws
 
     def bin_aws
       unless @bin_aws
-        @bin_aws = `which aws`.gsub("\n", '')
-        @bin_aws = '~/.local/bin/aws' if @bin_aws.index(' ') || @bin_aws.length == 0
+        @bin_aws = `which aws`.delete("\n")
+        @bin_aws = '~/.local/bin/aws' if @bin_aws.index(' ') || @bin_aws.empty?
       end
       @bin_aws
     end
